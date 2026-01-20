@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600&display=swap');
+
+/* Typography Overrides */
+html,
+body,
+[class*="css"] {
+    font-family: 'Inter', sans-serif;
+    color: #002147;
+}
+
+h1,
+h2,
+h3,
+h4,
+.serif-font {
+    font-family: 'Merriweather', serif;
+    color: #002147;
+}
+
+h1 {
+    font-weight: 900;
+    letter-spacing: -0.5px;
+}
+
+/* Button Styling - Pill Shape */
+div.stButton>button {
+    border-radius: 50px;
+    padding: 10px 24px;
+    font-weight: 600;
+    border: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 80, 80, 0.1), 0 2px 4px -1px rgba(0, 80, 80, 0.06);
+    transition: all 0.3s ease;
+}
+
+div.stButton>button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 80, 80, 0.2);
+}
+
+div.stButton>button[kind="secondary"] {
+    background-color: white;
+    border: 1px solid #002147;
+    color: #002147;
+}
+
+/* Card/Container Styling */
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    background-color: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #E2E8F0;
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="password"],
+textarea {
+    border-radius: 8px;
+    border: 1px solid #CBD5E1;
+}
+
+/* Metrics */
+[data-testid="stMetricValue"] {
+    color: #008080;
+    font-family: 'Merriweather', serif;
+}
+
+/* Progress Bar */
+.stProgress>div>div>div>div {
+    background-color: #008080;
+}
+
+/* Custom Classes for Hero Section (to be used with unsafe_allow_html) */
+.hero-container {
+    background-color: #002147;
+    padding: 60px 20px;
+    border-radius: 0 0 24px 24px;
+    text-align: center;
+    margin: -100px -50px 40px -50px;
+    /* Negative margin to pull to edges if possible inside st container */
+    color: white;
+}
+
+.hero-title {
+    font-family: 'Merriweather', serif;
+    color: white !important;
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    color: #E2E8F0;
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.step-indicator {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #008080;
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    margin-right: 10px;
+}
