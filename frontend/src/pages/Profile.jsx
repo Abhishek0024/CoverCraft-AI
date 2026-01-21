@@ -59,7 +59,7 @@ const Profile = () => {
                 </div>
 
                 <div style={{ marginBottom: '40px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                    <div className="profile-user-info" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                         <div style={{
                             width: '80px', height: '80px', borderRadius: '50%', background: 'var(--accent)',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -74,7 +74,7 @@ const Profile = () => {
                     </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '40px' }}>
+                <div className="profile-grid" style={{}}>
 
                     {/* History List */}
                     <div>

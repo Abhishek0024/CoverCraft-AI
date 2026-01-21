@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { resume, job, generator } from '../api';
 import {
     Upload, FileText, Zap, Settings, Check,
-    Copy, Download, LogOut, ChevronRight, Briefcase, User
+    Copy, Download, LogOut, ChevronRight, Briefcase, User, Home
 } from 'lucide-react';
 
 const Dashboard = () => {
@@ -158,6 +158,13 @@ const Dashboard = () => {
                                     </div>
 
                                     <div
+                                        onClick={() => { setShowDropdown(false); navigate('/'); }}
+                                        className="dropdown-item"
+                                    >
+                                        <Home size={16} /> Home
+                                    </div>
+
+                                    <div
                                         onClick={handleLogout}
                                         className="dropdown-item danger"
                                         style={{ color: '#ef4444' }}
@@ -170,7 +177,7 @@ const Dashboard = () => {
                     </div>
                 </header>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'minmax(350px, 1fr) 1.5fr', gap: '40px', alignItems: 'start' }}>
+                <div className="dashboard-grid">
 
                     {/* Left Panel: Inputs */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>

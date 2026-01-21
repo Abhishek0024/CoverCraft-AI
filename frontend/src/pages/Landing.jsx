@@ -1,13 +1,27 @@
 import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Star, Zap, CheckCircle, FileText, Sparkles } from 'lucide-react';
+import { ArrowRight, Star, Zap, CheckCircle, FileText, Sparkles, User, LogOut, LayoutDashboard } from 'lucide-react';
 
 const Landing = () => {
     const navigate = useNavigate();
     const { scrollY } = useScroll();
     const y1 = useTransform(scrollY, [0, 500], [0, 200]);
     const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+    const [showDropdown, setShowDropdown] = React.useState(false);
+
+    React.useEffect(() => {
+        const token = localStorage.getItem('access_token');
+        setIsLoggedIn(!!token);
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('access_token');
+        setIsLoggedIn(false);
+        setShowDropdown(false);
+    };
 
     return (
         <div className="landing-page">
@@ -25,10 +39,72 @@ const Landing = () => {
                     <span className="logo-text">CoverCraft AI</span>
                 </div>
                 <div className="nav-links">
-                    <button onClick={() => navigate('/auth')} className="btn btn-secondary glass-btn">Sign In</button>
-                    <button onClick={() => navigate('/auth')} className="btn btn-primary glow-effect">
-                        Get Started <ArrowRight size={18} />
-                    </button>
+                    {!isLoggedIn ? (
+                        <>
+                            <button onClick={() => navigate('/auth')} className="btn btn-secondary glass-btn">Sign In</button>
+                            <button onClick={() => navigate('/auth')} className="btn btn-primary glow-effect">
+                                Get Started <ArrowRight size={18} />
+                            </button>
+                        </>
+                    ) : (
+                        <div style={{ position: 'relative' }}>
+                            <button
+                                onClick={() => setShowDropdown(!showDropdown)}
+                                style={{
+                                    width: '40px', height: '40px', borderRadius: '50%',
+                                    background: 'white', border: '1px solid var(--border-light)',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    cursor: 'pointer', outline: 'none', boxShadow: 'var(--shadow-sm)'
+                                }}
+                            >
+                                <User size={20} color="var(--text-primary)" />
+                            </button>
+
+                            <AnimatePresence>
+                                {showDropdown && (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                                        transition={{ duration: 0.1 }}
+                                        style={{
+                                            position: 'absolute', top: '50px', right: 0,
+                                            background: '#fff', border: '1px solid var(--border-light)',
+                                            borderRadius: '12px', boxShadow: 'var(--shadow-lg)',
+                                            width: '200px', zIndex: 50, overflow: 'hidden',
+                                            transformOrigin: 'top right'
+                                        }}
+                                    >
+                                        <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--border-light)' }}>
+                                            <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>My Account</p>
+                                        </div>
+
+                                        <div
+                                            onClick={() => navigate('/profile')}
+                                            className="dropdown-item"
+                                        >
+                                            <User size={16} /> Profile
+                                        </div>
+
+                                        <div
+                                            onClick={() => navigate('/dashboard')}
+                                            className="dropdown-item"
+                                        >
+                                            <LayoutDashboard size={16} /> Dashboard
+                                        </div>
+
+                                        <div
+                                            onClick={handleLogout}
+                                            className="dropdown-item danger"
+                                            style={{ color: '#ef4444' }}
+                                        >
+                                            <LogOut size={16} /> Sign Out
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    )}
                 </div>
             </nav>
 
@@ -53,7 +129,7 @@ const Landing = () => {
                         </p>
 
                         <div className="hero-cta-group">
-                            <button onClick={() => navigate('/auth')} className="btn btn-primary btn-lg glow-effect">
+                            <button onClick={() => navigate(isLoggedIn ? '/dashboard' : '/auth')} className="btn btn-primary btn-lg glow-effect">
                                 Start Building Free
                             </button>
                             <div className="social-proof">

@@ -272,6 +272,12 @@ button {
   margin: 0 auto;
 }
 
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 16px 20px;
+  }
+}
+
 .logo-section {
   display: flex;
   align-items: center;
@@ -746,4 +752,59 @@ button {
 .dropdown-item.danger:hover {
   background-color: #fef2f2;
   color: #ef4444;
+}
+
+/* Dashboard Responsive Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(350px, 1fr) 1.5fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    /* Ensure hidden on mobile if not using a hamburger yet */
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 40px;
+}
+
+@media (max-width: 900px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .profile-header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .profile-user-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 }
