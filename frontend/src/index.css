@@ -730,6 +730,11 @@ button {
   .nav-links {
     display: none;
   }
+
+  .hero-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 /* Dropdown */
