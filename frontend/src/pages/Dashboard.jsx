@@ -6,6 +6,7 @@ import {
     Upload, FileText, Zap, Settings, Check,
     Copy, Download, LogOut, ChevronRight, Briefcase, User, Home
 } from 'lucide-react';
+import ThemeToggle from '../components/ThemeToggle';
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -15,8 +16,10 @@ const Dashboard = () => {
     // Data State
     const [resumeFile, setResumeFile] = useState(null);
     const [resumeId, setResumeId] = useState(null);
+    const [resumeText, setResumeText] = useState(''); // New state
     const [jdText, setJdText] = useState('');
-    const [jdId, setJdId] = useState(null);
+    const [jdId, setJdId] = useState(null); // Keep ID for future
+    const [jdAnalysis, setJdAnalysis] = useState(null); // Store JD analysis if needed
 
     // Generation State
     const [tone, setTone] = useState('Professional');
@@ -43,6 +46,7 @@ const Dashboard = () => {
         try {
             const res = await resume.upload(formData);
             setResumeId(res.data.resume_id);
+            setResumeText(res.data.extracted_text || ''); // Store text
             setStatusMsg('');
         } catch (err) {
             console.error(err);
@@ -76,7 +80,9 @@ const Dashboard = () => {
                 resume_id: resumeId,
                 jd_id: jdId,
                 tone: tone.toLowerCase(),
-                focus: focus.toLowerCase().split(' ')[0]
+                focus: focus.toLowerCase().split(' ')[0],
+                resume_text: resumeText,
+                jd_text: jdText
             };
 
             const res = await generator.create(payload);
@@ -118,62 +124,65 @@ const Dashboard = () => {
                         </div>
                         <h2 style={{ fontSize: '1.5rem', margin: 0 }}>CoverCraft AI</h2>
                     </div>
-                    <div style={{ position: 'relative' }}>
-                        <button
-                            onClick={() => setShowDropdown(!showDropdown)}
-                            style={{
-                                width: '40px', height: '40px', borderRadius: '50%',
-                                background: 'white', border: '1px solid var(--border-light)',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                cursor: 'pointer', outline: 'none', boxShadow: 'var(--shadow-sm)'
-                            }}
-                        >
-                            <User size={20} color="var(--text-primary)" />
-                        </button>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                        <ThemeToggle />
+                        <div style={{ position: 'relative' }}>
+                            <button
+                                onClick={() => setShowDropdown(!showDropdown)}
+                                style={{
+                                    width: '40px', height: '40px', borderRadius: '50%',
+                                    background: 'var(--bg-card)', border: '1px solid var(--border-light)',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    cursor: 'pointer', outline: 'none', boxShadow: 'var(--shadow-sm)'
+                                }}
+                            >
+                                <User size={20} color="var(--text-primary)" />
+                            </button>
 
-                        <AnimatePresence>
-                            {showDropdown && (
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                                    exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                                    transition={{ duration: 0.1 }}
-                                    style={{
-                                        position: 'absolute', top: '50px', right: 0,
-                                        background: '#fff', border: '1px solid var(--border-light)',
-                                        borderRadius: '12px', boxShadow: 'var(--shadow-lg)',
-                                        width: '200px', zIndex: 50, overflow: 'hidden',
-                                        transformOrigin: 'top right'
-                                    }}
-                                >
-                                    <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--border-light)' }}>
-                                        <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>My Account</p>
-                                    </div>
-
-                                    <div
-                                        onClick={() => { setShowDropdown(false); navigate('/profile'); }}
-                                        className="dropdown-item"
+                            <AnimatePresence>
+                                {showDropdown && (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                                        transition={{ duration: 0.1 }}
+                                        style={{
+                                            position: 'absolute', top: '50px', right: 0,
+                                            background: 'var(--bg-card)', border: '1px solid var(--border-light)',
+                                            borderRadius: '12px', boxShadow: 'var(--shadow-lg)',
+                                            width: '200px', zIndex: 50, overflow: 'hidden',
+                                            transformOrigin: 'top right'
+                                        }}
                                     >
-                                        <User size={16} /> Profile
-                                    </div>
+                                        <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--border-light)' }}>
+                                            <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>My Account</p>
+                                        </div>
 
-                                    <div
-                                        onClick={() => { setShowDropdown(false); navigate('/'); }}
-                                        className="dropdown-item"
-                                    >
-                                        <Home size={16} /> Home
-                                    </div>
+                                        <div
+                                            onClick={() => { setShowDropdown(false); navigate('/profile'); }}
+                                            className="dropdown-item"
+                                        >
+                                            <User size={16} /> Profile
+                                        </div>
 
-                                    <div
-                                        onClick={handleLogout}
-                                        className="dropdown-item danger"
-                                        style={{ color: '#ef4444' }}
-                                    >
-                                        <LogOut size={16} /> Sign Out
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                                        <div
+                                            onClick={() => { setShowDropdown(false); navigate('/'); }}
+                                            className="dropdown-item"
+                                        >
+                                            <Home size={16} /> Home
+                                        </div>
+
+                                        <div
+                                            onClick={handleLogout}
+                                            className="dropdown-item danger"
+                                            style={{ color: '#ef4444' }}
+                                        >
+                                            <LogOut size={16} /> Sign Out
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
                     </div>
                 </header>
 

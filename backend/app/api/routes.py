@@ -31,13 +31,19 @@ async def upload_resume(
     # 1. Save file
     file_path = save_upload(file)
     
-    # 2. Parse (Dummy: passing file path as text for now, or just a placeholder)
-    parsed_data = parse_resume("dummy_text_from_pdf")
+    # 2. Parse PDF
+    parsed_data = parse_resume(file_path)
     
+    # Check for errors
+    if "error" in parsed_data:
+        # In production, raise HTTPException
+        pass
+
     return {
         "resume_id": str(uuid.uuid4()),
         "extracted_skills": parsed_data.get("extracted_skills", []),
-        "experience_level": parsed_data.get("experience_level", "Unknown")
+        "experience_level": parsed_data.get("experience_level", "Unknown"),
+        "extracted_text": parsed_data.get("extracted_text", "")
     }
 
 # -------------------------------
@@ -65,10 +71,13 @@ async def generate_cover_letter(
     db: Session = Depends(get_db)
 ):
     # In a real app, we would fetch resume/JD text using the IDs.
-    # For this dummy pipeline, we'll pass placeholder text.
+    # For now, we prefer text passed from frontend, or fallback to placeholders.
+    resume_text = request.resume_text or "Resume content not found."
+    jd_text = request.jd_text or "Job description content not found."
+
     result = run_pipeline(
-        resume_text="dummy_resume_text", 
-        jd_text="dummy_jd_text", 
+        resume_text=resume_text, 
+        jd_text=jd_text, 
         tone=request.tone
     )
     
@@ -78,7 +87,7 @@ async def generate_cover_letter(
         title=f"Cover Letter - {request.tone.capitalize()}",
         content=result["cover_letter"],
         match_score=result["match_score"],
-        job_description="Job Description Content Placeholder" # Ideally we'd store the JD text
+        job_description=jd_text
     )
     db.add(new_letter)
     db.commit()

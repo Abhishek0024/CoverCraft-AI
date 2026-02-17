@@ -1,9 +1,10 @@
 # Agent
-.agent
+.agent/
 
 # System
 .DS_Store
 Thumbs.db
+Desktop.ini
 
 # Environment
 .env
@@ -16,6 +17,14 @@ ENV/
 __pycache__/
 *.py[cod]
 *$py.class
+.pytest_cache/
+coverage/
+htmlcov/
+*.spec
+
+# IDE
+.vscode/
+.idea/
 
 # Node
 node_modules/

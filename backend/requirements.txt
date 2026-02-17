@@ -18,3 +18,10 @@ email-validator
 
 # Frontend
 streamlit
+
+# AI Integration
+google-generativeai
+python-dotenv
+
+# Utilities
+pypdf

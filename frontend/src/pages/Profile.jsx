@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { user, auth } from '../api';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Copy, FileText, Star, Zap } from 'lucide-react';
+import ThemeToggle from '../components/ThemeToggle';
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -56,6 +57,9 @@ const Profile = () => {
                         <ArrowLeft size={18} /> Back
                     </button>
                     <h1 style={{ fontSize: '2rem', margin: 0, color: 'var(--text-primary)' }}>My Profile</h1>
+                    <div style={{ marginLeft: 'auto' }}>
+                        <ThemeToggle />
+                    </div>
                 </div>
 
                 <div style={{ marginBottom: '40px' }}>

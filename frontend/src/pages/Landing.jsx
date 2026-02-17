@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Star, Zap, CheckCircle, FileText, Sparkles, User, LogOut, LayoutDashboard } from 'lucide-react';
+import ThemeToggle from '../components/ThemeToggle';
 
 const Landing = () => {
     const navigate = useNavigate();
@@ -38,7 +39,8 @@ const Landing = () => {
                     </div>
                     <span className="logo-text">CoverCraft AI</span>
                 </div>
-                <div className="nav-links">
+                <div className="nav-links" style={{ alignItems: 'center' }}>
+                    <ThemeToggle />
                     {!isLoggedIn ? (
                         <>
                             <button onClick={() => navigate('/auth')} className="btn btn-secondary glass-btn">Sign In</button>
@@ -52,7 +54,7 @@ const Landing = () => {
                                 onClick={() => setShowDropdown(!showDropdown)}
                                 style={{
                                     width: '40px', height: '40px', borderRadius: '50%',
-                                    background: 'white', border: '1px solid var(--border-light)',
+                                    background: 'var(--bg-card)', border: '1px solid var(--border-light)',
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                                     cursor: 'pointer', outline: 'none', boxShadow: 'var(--shadow-sm)'
                                 }}
@@ -69,7 +71,7 @@ const Landing = () => {
                                         transition={{ duration: 0.1 }}
                                         style={{
                                             position: 'absolute', top: '50px', right: 0,
-                                            background: '#fff', border: '1px solid var(--border-light)',
+                                            background: 'var(--bg-card)', border: '1px solid var(--border-light)',
                                             borderRadius: '12px', boxShadow: 'var(--shadow-lg)',
                                             width: '200px', zIndex: 50, overflow: 'hidden',
                                             transformOrigin: 'top right'

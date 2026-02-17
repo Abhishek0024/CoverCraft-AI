@@ -40,6 +40,104 @@
   --shadow-glow: 0 0 20px var(--accent-glow);
 }
 
+/* Dark Theme Palette */
+[data-theme='dark'] {
+  --bg-primary: #0f172a;
+  /* Slate 900 */
+  --bg-secondary: #1e293b;
+  /* Slate 800 */
+  --bg-card: rgba(30, 41, 59, 0.8);
+  --bg-input: #334155;
+  /* Slate 700 */
+
+  --text-primary: #f8fafc;
+  /* Slate 50 */
+  --text-secondary: #94a3b8;
+  /* Slate 400 */
+  --text-muted: #64748b;
+  /* Slate 500 */
+
+  --border-light: #334155;
+  /* Slate 700 */
+  --border-focus: #6366f1;
+  /* Indigo 500 */
+
+  --accent: #6366f1;
+  /* Lighter Indigo for dark mode */
+  --accent-glow: rgba(99, 102, 241, 0.25);
+  --accent-hover: #818cf8;
+  /* Indigo 400 */
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+
+  /* Class Overrides */
+  .bg-noise {
+    opacity: 0.05;
+    filter: invert(1);
+  }
+
+  .bg-gradient-1,
+  .bg-gradient-2 {
+    opacity: 0.15;
+  }
+
+  .btn-secondary {
+    background: var(--bg-secondary);
+    border-color: var(--border-light);
+    color: var(--text-primary);
+  }
+
+  .btn-secondary:hover {
+    background: var(--bg-input);
+    border-color: var(--border-focus);
+  }
+
+  .input-field {
+    background: var(--bg-input);
+    color: var(--text-primary);
+    border-color: var(--border-light);
+  }
+
+  .ticker-wrap {
+    background: var(--bg-primary);
+  }
+
+  .feature-card {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+  }
+
+  .feature-card:hover {
+    border-color: var(--border-focus);
+  }
+
+  .icon-box {
+    background: rgba(99, 102, 241, 0.1);
+  }
+
+  .footer {
+    background: var(--bg-secondary);
+  }
+
+  .dropdown-item.danger:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+  }
+
+  .skeleton-line {
+    background: var(--bg-input);
+  }
+
+  /* Landing Page Specifics */
+  .floating-card,
+  .card-badge {
+    background: var(--bg-card);
+    border-color: var(--border-light);
+    color: var(--text-primary);
+  }
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -344,6 +442,7 @@ button {
 
 .text-gradient-primary {
   background: linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;

@@ -40,6 +40,7 @@ class ResumeResponse(BaseModel):
     resume_id: str
     extracted_skills: List[str]
     experience_level: str
+    extracted_text: Optional[str] = None
 
 
 class JDResponse(BaseModel):
@@ -54,8 +55,10 @@ class JDResponse(BaseModel):
 class GenerateRequest(BaseModel):
     resume_id: str
     jd_id: str
-    tone: str              # e.g., formal, enthusiastic
-    focus: str             # e.g., skills, achievements, culture
+    tone: str
+    focus: str
+    resume_text: Optional[str] = None
+    jd_text: Optional[str] = None
 
 
 class GenerateResponse(BaseModel):
